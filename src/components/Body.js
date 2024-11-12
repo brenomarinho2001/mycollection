@@ -5,7 +5,7 @@ import axios from 'axios';
 const Body = () => {
     const [games, setGames] = useState([]);
     const [isLogged, setIsLogged] = useState(false);
-    const [userId, setUserId] = useState(null);  // Estado para armazenar o ID do usuário logado
+    const [userId, setUserId] = useState(null); // Estado para armazenar o ID do usuário logado
 
     // Verifica se o usuário está logado e busca os jogos
     useEffect(() => {
@@ -14,24 +14,25 @@ const Body = () => {
             setIsLogged(true);
             // Decodificar o JWT para pegar o ID do usuário
             const decodedToken = JSON.parse(atob(jwt.split('.')[1]));
-            setUserId(decodedToken.id);  // Define o ID do usuário logado
-            fetchUserGames(jwt, decodedToken.id);  // Passa o ID para a função de busca
+            setUserId(decodedToken.id); // Define o ID do usuário logado
+            fetchUserGames(jwt, decodedToken.id); // Passa o ID para a função de busca
         }
     }, []);
 
     // Função para buscar os jogos do usuário autenticado
     const fetchUserGames = async (token, userId) => {
         try {
-            const response = await axios.get('http://localhost:1337/api/games?populate=user', {
+            const response = await axios.get('http://localhost:1337/api/games?populate=photo', {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
             });
-            console.log('Dados retornados pela API:', response.data); // Verificar estrutura dos dados
+            console.log('Dados retornados pela API:', response.data.data[0].photo.formats.thumbnail.url); // Verificar estrutura dos dados
 
             // Filtra jogos que estão relacionados ao usuário autenticado
-            const userGames = response.data.data.filter(game => game.user.id === userId);
-            setGames(userGames); // Define apenas os jogos do usuário
+            
+            setGames(response.data.data); // Define apenas os jogos do usuário
+            
         } catch (error) {
             console.error('Erro ao buscar jogos:', error.response ? error.response.data.message : error.message);
         }
@@ -42,11 +43,16 @@ const Body = () => {
             {isLogged ? (
                 games.length > 0 ? (
                     games.map(game => (
-                        <div>
-                        <p key={game.id} style={{ textAlign: 'center', fontFamily: 'monospace', fontSize: '18px' }}>{game.nome}</p>
-                        <p key={game.id} style={{ textAlign: 'center', fontFamily: 'monospace', fontSize: '18px' }}>{game.desc}</p>
-                        <img src="http://localhost:1337/uploads/thumbnail_baixados_2886adf1e9.jpg" alt="Chrono Trigger"></img>
-
+                        <div key={game.id} style={{ textAlign: 'center', marginBottom: '20px' }}>
+                            <p style={{ fontFamily: 'monospace', fontSize: '18px' }}>{game.nome}</p>
+                            <p style={{ fontFamily: 'monospace', fontSize: '18px' }}>{game.desc}</p>
+                  
+                                    <img
+                                        src={`http://localhost:1337/${game.photo.formats.thumbnail.url}`}
+                                        alt={game.nome}
+                                        style={{ maxWidth: '100%', height: 'auto' }}
+                                    />
+                            
                         </div>
                     ))
                 ) : (
