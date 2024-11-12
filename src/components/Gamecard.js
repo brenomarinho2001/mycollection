@@ -1,10 +1,33 @@
 // src/components/GameCard.js
-import React from 'react';
+import React,{ useEffect } from 'react';
+
+import axios from 'axios';
+
+const GameList = () => {
+    useEffect(() => {
+        // Fazendo o GET para buscar a lista de jogos
+        axios.get('http://localhost:1337/api/games')
+            .then(response => {
+                console.log("Lista de Jogos:", response.data.data); // Exibe todos os jogos no console
+            })
+            .catch(error => {
+                console.error("Erro ao buscar os jogos:", error);
+            });
+    }, []);
+
+    return (
+        <div>
+            <h2>Verifique o console para a lista de jogos</h2>
+        </div>
+    );
+};
+
 
 const GameCard = ({ game }) => {
+    console.log(GameList)
     const renderStars = () => {
         if (game.rating === null) {
-            return <span style={{color:'black'}}>Não foi jogado ainda</span>;
+            return <span style={{color:'black'}}>Não foi finalizado</span>;
         }
 
         const stars = [];
@@ -30,10 +53,11 @@ const GameCard = ({ game }) => {
     };
 
     return (
-        <div style={{ border: '1px solid #ddd', borderRadius: '8px', padding: '16px', width: '200px', textAlign: 'center', cursor:'pointer' }}>
+        <div className='gamecard'>
             <img src={game.image} alt={game.title} style={{ width: '100%', borderRadius: '4px' }} />
             <h3>{game.title}</h3>
             <p>{game.description}</p>
+            
             <p><strong>Console:</strong> {game.console}</p>
             <div style={{ fontSize: '20px', color: '#ffd700',fontStyle:'italic'}}>
                 {renderStars()}
