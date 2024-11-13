@@ -1,36 +1,62 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import './RegisterForm.css'; // Importe o CSS aqui
+import './RegisterForm.css';
 
 function RegisterForm() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [avatar, setAvatar] = useState(null);
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
-      const response = await fetch('http://localhost:1337/api/auth/local/register', {
+      // Primeiro, cria o usuário
+      const userResponse = await fetch('http://localhost:1337/api/auth/local/register', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          username: email.split('@')[0], // Define um nome de usuário baseado no email
+          username: email.split('@')[0],
           email: email,
           password: password,
         }),
       });
 
-      const data = await response.json();
+      const userData = await userResponse.json();
 
-      if (response.ok) {
-        console.log('Registro bem-sucedido:', data);
-        localStorage.setItem('jwt', data.jwt); // Salva o token de autenticação
-        navigate('/'); // Redireciona para a página inicial
+      if (userResponse.ok) {
+        console.log('Registro bem-sucedido:', userData);
+        localStorage.setItem('jwt', userData.jwt);
+
+        // Se um avatar foi selecionado, faz o upload
+        if (avatar) {
+          const formData = new FormData();
+          formData.append('files', avatar);
+          formData.append('ref', 'plugin::users-permissions.user'); // Modelo de usuário
+          formData.append('refId', userData.user.id); // ID do usuário recém-criado
+          formData.append('field', 'avatar'); // Nome do campo no modelo
+
+          const uploadResponse = await fetch('http://localhost:1337/api/upload', {
+            method: 'POST',
+            headers: {
+              Authorization: `Bearer ${userData.jwt}`,
+            },
+            body: formData,
+          });
+
+          if (uploadResponse.ok) {
+            console.log('Avatar enviado com sucesso');
+          } else {
+            console.error('Falha no upload do avatar');
+          }
+        }
+
+        navigate('/'); // Redireciona para a página inicial após o registro
       } else {
-        alert(data.error.message || 'Erro ao registrar! Verifique os dados e tente novamente.');
+        alert(userData.error.message || 'Erro ao registrar! Verifique os dados e tente novamente.');
       }
     } catch (error) {
       console.error('Erro de registro:', error);
@@ -60,6 +86,15 @@ function RegisterForm() {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
+          />
+        </div>
+        <div className="form-group">
+          <label htmlFor="avatar">Avatar:</label>
+          <input
+            type="file"
+            id="avatar"
+            accept="image/*"
+            onChange={(e) => setAvatar(e.target.files[0])}
           />
         </div>
         <button type="submit" className="register-button">Registrar</button>
