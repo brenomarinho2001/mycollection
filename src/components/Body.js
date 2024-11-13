@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import '../App.css'
+import '../App.css';
 
 const Body = () => {
     const [games, setGames] = useState([]);
@@ -42,36 +42,49 @@ const Body = () => {
 
     return (
         <main className="main-container">
-            <h2  style={{fontStyle:'italic'}}>> Minha Coleção</h2>
-            <div style={{display:'flex'}}>
-            {isLogged ? (
-                games.length > 0 ? (
-                    games.map(game => (
-                        <div className="game-card" key={game.id}>
-                            {game.photo && game.photo[0] && game.photo[0].formats && game.photo[0].formats.thumbnail && (
-                                <img
-                                    src={`http://localhost:1337${game.photo[0].formats.small.url}`}
-                                    alt={game.nome}
-                                    className="game-image"
-                                />
-                            )}
-                            <div className="game-info">
-                                <h3 className="game-title">{game.nome}</h3>
-                                <div style={{display:'flex'}}>
-                                <p className="game-platform" style={{marginRight:'5px'}}>{game.plataforma}</p>
-                                <div className="game-stars">
-                                    {'★'.repeat(game.stars) + '☆'.repeat(5 - game.stars)}
-                                </div>
+            <h2 className="collection-title" style={{ fontStyle: 'italic' }}>> Minha Coleção</h2>
+            <div style={{ display: 'flex' }}>
+                {isLogged ? (
+                    games.length > 0 ? (
+                        games.map(game => (
+                            <div className="game-card" key={game.id}>
+                                {game.photo && game.photo[0] && game.photo[0].formats && game.photo[0].formats.small && (
+                                    <img
+                                        src={`http://localhost:1337${game.photo[0].formats.small.url}`}
+                                        alt={game.nome}
+                                        className="game-image"
+                                    />
+                                )}
+                                <div className="game-info">
+                                    <h3 className="game-title">{game.nome}</h3>
+                                    <div style={{ display: 'flex' }}>
+                                        <p className="game-platform" style={{ marginRight: '5px' }}>{game.plataforma}</p>
+                                        <div className="game-stars">
+                                            {'★'.repeat(game.stars) + '☆'.repeat(5 - game.stars)}
+                                        </div>
+                                    </div>
+                                    <p
+                                        className="game-status"
+                                        style={{
+                                            marginRight: '5px',
+                                            textAlign: 'center',
+                                            backgroundColor: game.zerado ? 'green' : 'red',
+                                            color: 'white',
+                                            padding: '5px',
+                                            borderRadius: '5px',
+                                        }}
+                                    >
+                                        {game.zerado ? "Finalizado" : "Não Finalizado"}
+                                    </p>
                                 </div>
                             </div>
-                        </div>
-                    ))
+                        ))
+                    ) : (
+                        <p className="empty-message">Nenhum jogo encontrado.</p>
+                    )
                 ) : (
-                    <p className="empty-message">Nenhum jogo encontrado.</p>
-                )
-            ) : (
-                <p className="empty-message">Faça login para ver seus jogos.</p>
-            )}
+                    <p className="empty-message">Faça login para ver seus jogos.</p>
+                )}
             </div>
         </main>
     );

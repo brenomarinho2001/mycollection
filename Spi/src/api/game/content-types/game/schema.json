@@ -36,6 +36,10 @@
     },
     "plataforma": {
       "type": "string"
+    },
+    "zerado": {
+      "type": "boolean",
+      "default": false
     }
   }
 }

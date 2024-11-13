@@ -83,8 +83,9 @@ body, html, #root {
     color: #333;
     z-index: 1; /* Coloca o título acima da linha */
     padding: 0 20px; /* Espaço ao redor do texto */
-    background-color: #f4f4f9; /* Mesma cor do fundo para dar o efeito de corte na linha */
+    box-shadow: 0px 2px 0px rgba(0, 0, 0, 0.3); /* Sombra na linha */
 }
+
 
 .collection-title-line {
     position: absolute;
@@ -92,8 +93,7 @@ body, html, #root {
     left: 5%; /* Início da linha a partir da borda esquerda */
     width: 90%; /* Largura da linha quase total */
     height: 4px;
-    background-color: #0073e6; /* Cor da linha */
-    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.3); /* Sombra na linha */
+
     transform: translateY(-50%); /* Centraliza verticalmente */
     border-radius: 2px;
 }
