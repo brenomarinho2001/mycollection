@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import './RegisterForm.css'; // Importe o CSS aqui
 
 function RegisterForm() {
   const [email, setEmail] = useState('');
@@ -29,7 +30,7 @@ function RegisterForm() {
         localStorage.setItem('jwt', data.jwt); // Salva o token de autenticação
         navigate('/'); // Redireciona para a página inicial
       } else {
-        alert('Erro ao registrar! Verifique os dados e tente novamente.');
+        alert(data.error.message || 'Erro ao registrar! Verifique os dados e tente novamente.');
       }
     } catch (error) {
       console.error('Erro de registro:', error);
@@ -38,10 +39,10 @@ function RegisterForm() {
   };
 
   return (
-    <div style={{ maxWidth: '300px', margin: '0 auto', padding: '1rem' }}>
+    <div className="register-container">
       <h2>Registrar-se no MyCollection</h2>
-      <form onSubmit={handleSubmit}>
-        <div>
+      <form onSubmit={handleSubmit} className="register-form">
+        <div className="form-group">
           <label htmlFor="email">Email:</label>
           <input
             type="email"
@@ -51,7 +52,7 @@ function RegisterForm() {
             required
           />
         </div>
-        <div>
+        <div className="form-group">
           <label htmlFor="password">Senha:</label>
           <input
             type="password"
@@ -61,7 +62,7 @@ function RegisterForm() {
             required
           />
         </div>
-        <button type="submit">Registrar</button>
+        <button type="submit" className="register-button">Registrar</button>
       </form>
     </div>
   );

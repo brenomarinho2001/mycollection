@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import './LoginForm.css'; // Importando a folha de estilos
 
 function LoginForm() {
   const [email, setEmail] = useState('');
@@ -41,10 +42,10 @@ function LoginForm() {
   };
 
   return (
-    <div style={{ maxWidth: '300px', margin: '0 auto', padding: '1rem' }}>
-      <h2>Login em MyCollection</h2>
-      <form onSubmit={handleSubmit}>
-        <div>
+    <div className="login-container">
+      <h2 style={{fontStyle:'italic'}}>Login</h2>
+      <form onSubmit={handleSubmit} className="login-form">
+        <div className="form-group">
           <label htmlFor="email">Email:</label>
           <input
             type="email"
@@ -54,7 +55,7 @@ function LoginForm() {
             required
           />
         </div>
-        <div>
+        <div className="form-group">
           <label htmlFor="password">Senha:</label>
           <input
             type="password"
@@ -64,9 +65,9 @@ function LoginForm() {
             required
           />
         </div>
-        <button type="submit">Entrar</button>
+        <button type="submit" className="login-button">Entrar</button>
       </form>
-      <button onClick={handleRegisterRedirect} style={{ marginTop: '10px' }}>
+      <button onClick={handleRegisterRedirect} className="register-button">
         Criar uma conta
       </button>
     </div>

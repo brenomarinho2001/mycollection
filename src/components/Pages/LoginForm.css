@@ -1,0 +1,72 @@
+/* LoginForm.css */
+.login-container {
+  width: 100%;
+  max-width: 320px;
+  margin: 50px auto;
+  padding: 2rem;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  font-family: Arial, sans-serif;
+}
+
+.login-container h2 {
+  color: #333;
+  margin-bottom: 1.5rem;
+}
+
+.login-form .form-group {
+  margin-bottom: 1.5rem;
+  text-align: left;
+  width: 100%; /* Garante que o form-group ocupe toda a largura */
+}
+
+.login-form label {
+  display: block;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 0.5rem;
+}
+
+.login-form input {
+  width: 100%; /* Garante que o input ocupe toda a largura do container */
+  box-sizing: border-box; /* Evita que o padding cause overflow */
+  padding: 0.8rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 1rem;
+  transition: border-color 0.3s;
+}
+
+.login-form input:focus {
+  border-color: #0056b3;
+  outline: none;
+}
+
+.login-button,
+.register-button {
+  width: 100%;
+  padding: 0.8rem;
+  background-color: #0056b3;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.login-button:hover,
+.register-button:hover {
+  background-color: #004494;
+}
+
+.register-button {
+  margin-top: 1rem;
+  background-color: #6c757d;
+}
+
+.register-button:hover {
+  background-color: #5a6268;
+}
