@@ -34,7 +34,7 @@ const Header = () => {
         localStorage.removeItem('jwt');
         setIsLoggedIn(false);
         setUser(null);
-        navigate('/');
+        navigate('/Login');
     };
 
     return (

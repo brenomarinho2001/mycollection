@@ -6,7 +6,7 @@ import axios from 'axios';
 const GameList = () => {
     useEffect(() => {
         // Fazendo o GET para buscar a lista de jogos
-        axios.get('http://localhost:1337/api/games')
+        axios.get('http://localhost:1337/api/users?populate=games.photo')
             .then(response => {
                 console.log("Lista de Jogos:", response.data.data); // Exibe todos os jogos no console
             })

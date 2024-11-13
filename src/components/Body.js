@@ -1,66 +1,78 @@
-// src/components/Body.js
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import '../App.css'
 
 const Body = () => {
     const [games, setGames] = useState([]);
     const [isLogged, setIsLogged] = useState(false);
-    const [userId, setUserId] = useState(null); // Estado para armazenar o ID do usuário logado
+    const [userId, setUserId] = useState(null);
+    const [dataFetched, setDataFetched] = useState(false);
 
-    // Verifica se o usuário está logado e busca os jogos
     useEffect(() => {
         const jwt = localStorage.getItem('jwt');
-        if (jwt) {
+        if (jwt && !dataFetched) {
             setIsLogged(true);
-            // Decodificar o JWT para pegar o ID do usuário
             const decodedToken = JSON.parse(atob(jwt.split('.')[1]));
-            setUserId(decodedToken.id); // Define o ID do usuário logado
-            fetchUserGames(jwt, decodedToken.id); // Passa o ID para a função de busca
+            setUserId(decodedToken.id);
+            fetchUserGames(jwt, decodedToken.id);
+            setDataFetched(true);
         }
-    }, []);
+    }, [dataFetched]);
 
-    // Função para buscar os jogos do usuário autenticado
     const fetchUserGames = async (token, userId) => {
         try {
-            const response = await axios.get('http://localhost:1337/api/games?populate=photo', {
+            const response = await axios.get(`http://localhost:1337/api/users/${userId}?populate=games.photo`, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
             });
-            console.log('Dados retornados pela API:', response.data.data[0].photo.formats.thumbnail.url); // Verificar estrutura dos dados
+            
+            const userData = response.data;
 
-            // Filtra jogos que estão relacionados ao usuário autenticado
-            
-            setGames(response.data.data); // Define apenas os jogos do usuário
-            
+            if (userData && userData.games) {
+                const uniqueGames = [...new Map(userData.games.map(game => [game.id, game])).values()];
+                setGames(uniqueGames);
+            } else {
+                setGames([]);
+            }
         } catch (error) {
-            console.error('Erro ao buscar jogos:', error.response ? error.response.data.message : error.message);
+            console.error('Erro ao buscar jogos do usuário:', error.response ? error.response.data.message : error.message);
         }
     };
 
     return (
-        <main style={{ padding: '20px' }}>
+        <main className="main-container">
+            <h2  style={{fontStyle:'italic'}}>> Minha Coleção</h2>
+            <div style={{display:'flex'}}>
             {isLogged ? (
                 games.length > 0 ? (
                     games.map(game => (
-                        <div key={game.id} style={{ textAlign: 'center', marginBottom: '20px' }}>
-                            <p style={{ fontFamily: 'monospace', fontSize: '18px' }}>{game.nome}</p>
-                            <p style={{ fontFamily: 'monospace', fontSize: '18px' }}>{game.desc}</p>
-                  
-                                    <img
-                                        src={`http://localhost:1337/${game.photo.formats.thumbnail.url}`}
-                                        alt={game.nome}
-                                        style={{ maxWidth: '100%', height: 'auto' }}
-                                    />
-                            
+                        <div className="game-card" key={game.id}>
+                            {game.photo && game.photo[0] && game.photo[0].formats && game.photo[0].formats.thumbnail && (
+                                <img
+                                    src={`http://localhost:1337${game.photo[0].formats.small.url}`}
+                                    alt={game.nome}
+                                    className="game-image"
+                                />
+                            )}
+                            <div className="game-info">
+                                <h3 className="game-title">{game.nome}</h3>
+                                <div style={{display:'flex'}}>
+                                <p className="game-platform" style={{marginRight:'5px'}}>{game.plataforma}</p>
+                                <div className="game-stars">
+                                    {'★'.repeat(game.stars) + '☆'.repeat(5 - game.stars)}
+                                </div>
+                                </div>
+                            </div>
                         </div>
                     ))
                 ) : (
-                    <p style={{ textAlign: 'center' }}>Nenhum jogo encontrado.</p>
+                    <p className="empty-message">Nenhum jogo encontrado.</p>
                 )
             ) : (
-                <p style={{ textAlign: 'center' }}>Faça login para ver seus jogos.</p>
+                <p className="empty-message">Faça login para ver seus jogos.</p>
             )}
+            </div>
         </main>
     );
 };

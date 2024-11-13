@@ -14,12 +14,6 @@
   "attributes": {
     "name": {
       "type": "string"
-    },
-    "games": {
-      "type": "relation",
-      "relation": "oneToMany",
-      "target": "api::game.game",
-      "mappedBy": "category"
     }
   }
 }

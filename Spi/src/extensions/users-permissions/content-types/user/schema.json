@@ -79,8 +79,7 @@
     "games": {
       "type": "relation",
       "relation": "oneToMany",
-      "target": "api::game.game",
-      "mappedBy": "user"
+      "target": "api::game.game"
     }
   }
 }
