@@ -1,20 +1,92 @@
-/* App.css */
-
-body, html, #root {
-  height: 100%;
-  margin: 0;
-  display: flex;
-  flex-direction: column;
+.main-container {
+  padding: 20px;
+  font-family: Arial, sans-serif;
 }
 
-.App {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
+.collection-title {
+  font-size: 28px;
+  font-weight: bold;
+  color: #333;
+  font-style: italic;
+  text-align: center;
+  margin-bottom: 30px;
 }
 
-.content {
-  flex: 1;
+.games-section {
+  margin-top: 40px;
+}
+
+.category-title {
+  font-size: 24px;
+  color: #444;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.sub-category-title {
+  font-size: 20px;
+  color: #666;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.games-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+}
+
+.game-card {
+  width: 200px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 16px;
+  text-align: center;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.game-card:hover {
+  transform: scale(1.05);
+}
+
+.game-image {
+  width: 100%;
+  height: 180px;
+  object-fit: contain;
+  border-radius: 4px;
+}
+
+.game-info {
+  margin-top: 10px;
+}
+
+.game-title {
+  font-size: 16px;
+  font-weight: bold;
+  color: #333;
+  margin: 5px 0;
+}
+
+.game-stars {
+  font-size: 14px;
+  color: #f5c518;
+}
+
+.game-status {
+  font-size: 14px;
+  font-weight: bold;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 5px;
+  margin-top: 10px;
+}
+
+.empty-message {
+  font-size: 18px;
+  color: #666;
+  text-align: center;
 }
 
 .buttonbase {
@@ -29,126 +101,4 @@ body, html, #root {
   margin-right: 10px;
   border-radius: 5px;
   cursor: pointer;
-}
-
-
-.gamecard{
-  /* style={{ border: '1px solid #ddd', borderRadius: '8px', padding: '16px', width: '200px', textAlign: 'center', cursor:'pointer' }}  */
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  padding: 16px;
-  width: 200px;
-  text-align: center;
-  cursor: pointer;
-
-  transform: scale(1);
-  transition: all ease 500ms;
-}
-
-.gamecard:hover{
-  transform: scale(1.1);
-  transition: all ease 500ms;
-}
-
-.profile{
-  margin-right: 15px;
-  display: flex;
-  justify-content: center;
-  align-items: center ;
-}
-
-/* Body.css */
-/* Body.css */
-/* Body.css */
-
-.main-container {
-  padding: 20px;
-  height: 100vh;
-  font-family: Arial, sans-serif;
-
-
-}
-
-
-.collection-title-container {
-    position: relative;
-    display: flex;
-    justify-content: center;
-    margin-bottom: 30px;
-}
-
-.collection-title {
-    font-size: 28px;
-    font-weight: bold;
-    color: #333;
-    z-index: 1; /* Coloca o título acima da linha */
-    padding: 0 20px; /* Espaço ao redor do texto */
-    box-shadow: 0px 2px 0px rgba(0, 0, 0, 0.3); /* Sombra na linha */
-}
-
-
-.collection-title-line {
-    position: absolute;
-    top: 50%;
-    left: 5%; /* Início da linha a partir da borda esquerda */
-    width: 90%; /* Largura da linha quase total */
-    height: 4px;
-
-    transform: translateY(-50%); /* Centraliza verticalmente */
-    border-radius: 2px;
-}
-
-.game-card:hover{
-  cursor: pointer;
-  transition: all ease 100ms;
-  transform: scale(1.1);
-}
-
-.game-image {
-  width: 100%;
-  height: 180px; /* Controla a altura do contêiner da imagem */
-  object-fit: contain; /* Mostra a imagem completa sem cortar */
-  padding: 10px;
-}
-
-.game-info {
-  padding: 10px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.game-title {
-  font-size: 16px;
-  font-weight: bold;
-  color: #333;
-  margin: 5px 0;
-}
-
-.game-desc {
-  font-size: 12px;
-  color: #666;
-  margin: 5px 0;
-}
-
-.game-platform {
-  font-size: 11px;
-  font-weight: bold;
-  color: #0073e6;
-  background-color: #e6f7ff;
-  padding: 5px 10px;
-  border-radius: 15px;
-  margin-top: 8px;
-}
-
-.game-stars {
-  font-size: 14px;
-  color: #f5c518;
-  margin-top: 8px;
-}
-
-.empty-message {
-  font-size: 18px;
-  color: #666;
-  margin-top: 50px;
 }

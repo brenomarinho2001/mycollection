@@ -1,0 +1,21 @@
+.gamecard {
+    width: 200px; /* Ajuste conforme necessário */
+    margin: 10px;
+    text-align: center;
+    font-family: Arial, sans-serif;
+    background-color: red;
+}
+
+.game-image {
+    width: 100%;
+    height: auto;
+    max-width: 150px; /* Define a largura máxima da imagem */
+    border-radius: 4px;
+    object-fit: cover; /* Garante que a imagem seja cortada para caber no container sem distorção */
+}
+
+.game-rating {
+    font-size: 20px;
+    color: #ffd700;
+    font-style: italic;
+}

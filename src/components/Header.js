@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-
+import { IoMdAdd } from "react-icons/io";
 const Header = () => {
     const navigate = useNavigate();
     const [user, setUser] = useState(null);
@@ -28,6 +28,10 @@ const Header = () => {
 
     const handleLoginRedirect = () => {
         navigate('/login');
+    };
+
+    const handleAddGame = () => {
+        navigate('/AddGame');
     };
 
     const handleLogout = () => {
@@ -72,10 +76,13 @@ const Header = () => {
                 </div>
                 <div>
                     {isLoggedIn && (
-                        <>
-                            <button className='buttonbase' style={{ height: '35px' }}>Adicionar Jogo</button>
+                        <div style={{display:'flex'}}>
+                            <button className='buttonbase' style={{ height: '35px', display: 'flex', alignItems: 'center', gap: '5px' }} onClick={handleAddGame}>
+                                Adicionar Jogo
+                                <IoMdAdd />
+                            </button>
                             <button className='buttonbase' style={{ height: '35px' }} onClick={handleLogout}>Logout</button>
-                        </>
+                        </div>
                     )}
                 </div>
             </div>
